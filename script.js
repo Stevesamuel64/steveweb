@@ -1,33 +1,34 @@
-// Scroll to About section when button clicked
-document.getElementById("aboutBtn").addEventListener("click", function() {
+// ✅ Smooth Scroll to About Section
+document.getElementById("aboutBtn").addEventListener("click", function () {
     document.getElementById("about").scrollIntoView({
         behavior: "smooth"
     });
 });
 
-// Backend form submission
-document.getElementById("contactForm").addEventListener("submit", async function(e) {
+
+// ✅ Initialize Supabase
+const supabaseUrl = "YOUR_SUPABASE_URL";
+const supabaseKey = "YOUR_SUPABASE_ANON_KEY";
+const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
+
+
+// ✅ Contact Form Submission
+document.getElementById("contactForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
-    const name = this.querySelector("input[type='text']").value;
-    const email = this.querySelector("input[type='email']").value;
-    const message = this.querySelector("textarea").value;
+    const name = document.getElementById("name").value;
+    const email = document.getElementById("email").value;
+    const message = document.getElementById("message").value;
 
-    try {
-        const response = await fetch("http://127.0.0.1:5000/contact", {
-            method: "POST",
-            headers: {
-                "Content-Type": "application/json"
-            },
-            body: JSON.stringify({ name, email, message })
-        });
+    const { error } = await supabase
+        .from("contacts")
+        .insert([{ name, email, message }]);
 
-        const result = await response.json();
-        alert(result.message);
-
-        this.reset();
-    } catch (error) {
+    if (error) {
         console.error("Error:", error);
-        alert("Server error.");
+        alert("❌ Failed to send message.");
+    } else {
+        alert("✅ Message sent successfully!");
+        this.reset();
     }
 });
