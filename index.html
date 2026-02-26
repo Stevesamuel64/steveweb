@@ -7,26 +7,10 @@
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+<link rel="stylesheet" href="style.css">
 
-<!-- Supabase CDN -->
+<!-- ✅ Supabase CDN -->
 <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
-<style>
-body { font-family: 'Inter', sans-serif; margin:0; padding:0; background:#0f172a; color:white; }
-header { display:flex; justify-content:space-between; padding:20px 60px; background:#111827; }
-header h1 { margin:0; }
-nav a { margin-left:20px; color:white; text-decoration:none; }
-.hero { display:flex; justify-content:space-between; align-items:center; padding:80px 60px; }
-.hero img { width:300px; border-radius:20px; }
-.btn-primary { padding:10px 20px; background:#3b82f6; border:none; color:white; cursor:pointer; border-radius:6px; }
-.section-title { text-align:center; margin-top:60px; }
-.cards, .cert-container { display:flex; justify-content:center; gap:20px; padding:40px; flex-wrap:wrap; }
-.card, .cert-card { background:#1f2937; padding:20px; border-radius:10px; width:250px; text-align:center; }
-.contact-container { display:flex; justify-content:center; padding:40px; }
-.contact-form { width:400px; display:flex; flex-direction:column; gap:15px; }
-input, textarea { padding:10px; border-radius:6px; border:none; }
-footer { text-align:center; padding:20px; background:#111827; margin-top:50px; }
-</style>
 
 </head>
 
@@ -44,13 +28,68 @@ footer { text-align:center; padding:20px; background:#111827; margin-top:50px; }
 </header>
 
 <section class="hero">
-    <div>
+
+    <div class="hero-text">
         <h2>Hi, I'm Steve P Samuel <br>Cloud Engineer</h2>
-        <p>I combine creative design thinking with robust engineering to craft seamless products.</p>
+        <p>
+            I combine creative design thinking with robust engineering 
+            to craft seamless products.
+        </p>
+
+        <div class="hero-buttons">
+            <button class="btn-primary" id="aboutBtn">About Me</button>
+
+            <a href="resume.pdf" download class="btn-primary outline-btn">
+                Download Resume
+            </a>
+        </div>
+
+        <div class="social-links">
+            <a href="https://linkedin.com/in/yourprofile" target="_blank">
+                <i class="fab fa-linkedin"></i> LinkedIn
+            </a>
+
+            <a href="https://github.com/yourprofile" target="_blank">
+                <i class="fab fa-github"></i> GitHub
+            </a>
+        </div>
     </div>
 
-    <div>
+    <div class="hero-image">
         <img src="steve.jpg" alt="Steve P Samuel">
+    </div>
+
+</section>
+
+<section id="about" class="about-section">
+    <h2 class="section-title">About Me</h2>
+    <div class="about-content">
+        <h3 class="about-name">Hi, I’m Steve P Samuel</h3>
+        <p>A passionate tech enthusiast and aspiring cloud computing professional dedicated to building scalable, secure, and user-centered digital solutions.</p>
+        <p>I combine <span class="highlight">Cloud Engineering</span> and <span class="highlight">UI/UX Design</span> to create intuitive and impactful solutions.</p>
+    </div>
+</section>
+
+<section id="skills">
+    <h2 class="section-title">Skills</h2>
+    <div class="cards">
+        <div class="card skill-card">
+            <div class="skill-icon">🎨</div>
+            <h3>UI UX Design</h3>
+            <p>Wireframing, Prototyping, Interaction Design, User Research</p>
+        </div>
+
+        <div class="card skill-card">
+            <div class="skill-icon">☁️</div>
+            <h3>Cloud Engineering</h3>
+            <p>AWS, Azure, DevOps, Cloud Architecture</p>
+        </div>
+
+        <div class="card skill-card">
+            <div class="skill-icon">🐍</div>
+            <h3>Python Development</h3>
+            <p>Automation, Scripting, Backend Logic, API Integration</p>
+        </div>
     </div>
 </section>
 
@@ -59,9 +98,18 @@ footer { text-align:center; padding:20px; background:#111827; margin-top:50px; }
 
     <div class="contact-container">
         <form id="contactForm" class="contact-form">
-            <input type="text" id="name" placeholder="Your Name" required>
-            <input type="email" id="email" placeholder="Your Email" required>
-            <textarea rows="5" id="message" placeholder="Your Message" required></textarea>
+            <div class="form-group">
+                <input type="text" id="name" placeholder="Your Name" required>
+            </div>
+
+            <div class="form-group">
+                <input type="email" id="email" placeholder="Your Email" required>
+            </div>
+
+            <div class="form-group">
+                <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
+            </div>
+
             <button type="submit" class="btn-primary">Send Message</button>
         </form>
     </div>
@@ -71,37 +119,34 @@ footer { text-align:center; padding:20px; background:#111827; margin-top:50px; }
     © 2026 Steve P Samuel | Cloud Engineer
 </footer>
 
+<!-- ✅ Supabase Script -->
 <script>
-/* ========== SUPABASE CONFIG ========== */
+    const supabaseUrl = "https://ytstcslqlrbucopqwuxf.supabase.co";
+    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0c3Rjc2xxbHJidWNvcHF3dXhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTI0NzksImV4cCI6MjA4NzY2ODQ3OX0.Fx6zZkoBs6oQ4keXpzMIdiwEKwLX0n5Uu09ZD95zsVo";
+    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
 
-const SUPABASE_URL = "https://ytstcslqlrbucopqwuxf.supabase.co";
-const SUPABASE_ANON_KEY = "sb_publishable_w2uqzj7XNg64_x_zzhp2rQ_e0q_a2dk";
+    const form = document.getElementById("contactForm");
 
-const supabase = window.supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+    form.addEventListener("submit", async (e) => {
+        e.preventDefault();
 
-/* ========== CONTACT FORM ========== */
+        const name = document.getElementById("name").value;
+        const email = document.getElementById("email").value;
+        const message = document.getElementById("message").value;
 
-document.getElementById("contactForm").addEventListener("submit", async function(e) {
-    e.preventDefault();
+        const { error } = await supabase
+            .from("contacts")
+            .insert([{ name, email, message }]);
 
-    const name = document.getElementById("name").value;
-    const email = document.getElementById("email").value;
-    const message = document.getElementById("message").value;
-
-    const { data, error } = await supabase
-        .from("contacts")
-        .insert([{ name, email, message }]);
-
-    if (error) {
-        alert("❌ Error sending message. Try again.");
-        console.error(error);
-    } else {
-        alert("✅ Message sent successfully!");
-        document.getElementById("contactForm").reset();
-    }
-});
+        if (error) {
+            alert("❌ Error sending message. Try again.");
+            console.error(error);
+        } else {
+            alert("✅ Message sent successfully!");
+            form.reset();
+        }
+    });
 </script>
 
 </body>
 </html>
-
