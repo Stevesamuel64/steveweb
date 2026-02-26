@@ -1,20 +1,27 @@
-// ✅ Smooth Scroll
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+// 🔴 Replace with your Firebase config
+const firebaseConfig = {
+  apiKey: "YOUR_API_KEY",
+  authDomain: "YOUR_AUTH_DOMAIN",
+  projectId: "YOUR_PROJECT_ID",
+  storageBucket: "YOUR_STORAGE_BUCKET",
+  messagingSenderId: "YOUR_SENDER_ID",
+  appId: "YOUR_APP_ID"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+
+// Smooth scroll
 document.getElementById("aboutBtn").addEventListener("click", function () {
     document.getElementById("about").scrollIntoView({
         behavior: "smooth"
     });
 });
 
-
-// ✅ Initialize Supabase
-const supabaseUrl = "YOUR_SUPABASE_URL";
-const supabaseKey = "YOUR_SUPABASE_ANON_KEY";
-
-const { createClient } = supabase;
-const supabaseClient = createClient(supabaseUrl, supabaseKey);
-
-
-// ✅ Contact Form Submission
+// Form submission
 document.getElementById("contactForm").addEventListener("submit", async function (e) {
     e.preventDefault();
 
@@ -22,15 +29,18 @@ document.getElementById("contactForm").addEventListener("submit", async function
     const email = document.getElementById("email").value.trim();
     const message = document.getElementById("message").value.trim();
 
-    const { error } = await supabaseClient
-        .from("contacts")
-        .insert([{ name, email, message }]);
+    try {
+        await addDoc(collection(db, "contacts"), {
+            name,
+            email,
+            message,
+            createdAt: new Date()
+        });
 
-    if (error) {
-        console.error("Supabase Error:", error);
-        alert("❌ Failed to send message.");
-    } else {
         alert("✅ Message sent successfully!");
         this.reset();
+    } catch (error) {
+        console.error("Firebase Error:", error);
+        alert("❌ Failed to send message.");
     }
 });
