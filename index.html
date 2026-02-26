@@ -9,9 +9,6 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
 <link rel="stylesheet" href="style.css">
 
-<!-- ✅ Supabase CDN -->
-<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
-
 </head>
 
 <body id="top">
@@ -28,7 +25,6 @@
 </header>
 
 <section class="hero">
-
     <div class="hero-text">
         <h2>Hi, I'm Steve P Samuel <br>Cloud Engineer</h2>
         <p>
@@ -38,7 +34,6 @@
 
         <div class="hero-buttons">
             <button class="btn-primary" id="aboutBtn">About Me</button>
-
             <a href="resume.pdf" download class="btn-primary outline-btn">
                 Download Resume
             </a>
@@ -58,7 +53,6 @@
     <div class="hero-image">
         <img src="steve.jpg" alt="Steve P Samuel">
     </div>
-
 </section>
 
 <section id="about" class="about-section">
@@ -95,21 +89,17 @@
 
 <section id="contact">
     <h2 class="section-title">Contact Me</h2>
-
     <div class="contact-container">
         <form id="contactForm" class="contact-form">
             <div class="form-group">
                 <input type="text" id="name" placeholder="Your Name" required>
             </div>
-
             <div class="form-group">
                 <input type="email" id="email" placeholder="Your Email" required>
             </div>
-
             <div class="form-group">
                 <textarea id="message" rows="5" placeholder="Your Message" required></textarea>
             </div>
-
             <button type="submit" class="btn-primary">Send Message</button>
         </form>
     </div>
@@ -119,34 +109,8 @@
     © 2026 Steve P Samuel | Cloud Engineer
 </footer>
 
-<!-- ✅ Supabase Script -->
-<script>
-    const supabaseUrl = "https://ytstcslqlrbucopqwuxf.supabase.co";
-    const supabaseKey = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Inl0c3Rjc2xxbHJidWNvcHF3dXhmIiwicm9sZSI6ImFub24iLCJpYXQiOjE3NzIwOTI0NzksImV4cCI6MjA4NzY2ODQ3OX0.Fx6zZkoBs6oQ4keXpzMIdiwEKwLX0n5Uu09ZD95zsVo";
-    const supabase = window.supabase.createClient(supabaseUrl, supabaseKey);
-
-    const form = document.getElementById("contactForm");
-
-    form.addEventListener("submit", async (e) => {
-        e.preventDefault();
-
-        const name = document.getElementById("name").value;
-        const email = document.getElementById("email").value;
-        const message = document.getElementById("message").value;
-
-        const { error } = await supabase
-            .from("contacts")
-            .insert([{ name, email, message }]);
-
-        if (error) {
-            alert("❌ Error sending message. Try again.");
-            console.error(error);
-        } else {
-            alert("✅ Message sent successfully!");
-            form.reset();
-        }
-    });
-</script>
+<!-- ✅ Firebase Script (Separate File) -->
+<script type="module" src="script.js"></script>
 
 </body>
 </html>
